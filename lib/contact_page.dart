@@ -5,7 +5,7 @@ class ContactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.yellow,
       appBar: AppBar(
         title: Text('Scaffold in contact page'),
       ),

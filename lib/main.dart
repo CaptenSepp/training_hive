@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart' as pp;
-import 'package:training_hive/contact.dart';
+import 'package:training_hive/contact_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +33,11 @@ class _MyAppState extends State<MyApp> {
             }
           } else {
             return Scaffold(
-              body: Text('snapshot.coonnectiostate is note dont'),
+              appBar: AppBar(
+                backgroundColor: Colors.red,
+                title: Text('snapshot.coonnectiostate is not done'),
+              ),
+              body: Text('snapshot.coonnectiostate is not done'),
             );
           }
         },
