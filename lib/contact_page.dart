@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:training_hive/new_contact.dart';
 
@@ -16,44 +15,45 @@ class ContactPage extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Expanded(child: _buildListView()),
+            Expanded(child: _ListView()),
             NewContactForm(),
           ],
         ));
   }
 
-  Widget _buildListView() {
-    return WatchBoxBuilder(
-      box: Hive.box('contacts'),
-      builder: (context, contactsBox) {
+  Widget _ListView() {
+    var contactsBox = Hive.box('contacts');
+    return ValueListenableBuilder(
+      valueListenable: Hive.box('contacts').listenable(),
+      builder: (context, Box box, _) {
         return ListView.builder(
-          itemCount: contactsBox.length,
+          itemCount: contactsBox.values.length,
           itemBuilder: (context, index) {
-            final contact = contactsBox.getAt(index) as Contact;
+            final contact = contactsBox.getAt(index);
 
             return ListTile(
               title: Text(contact.name),
               subtitle: Text(contact.age.toString()),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.refresh),
-                    onPressed: () {
-                      contactsBox.putAt(
-                        index,
-                        Contact('${contact.name}*', contact.age + 1),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.delete),
-                    onPressed: () {
-                      contactsBox.deleteAt(index);
-                    },
-                  )
-                ],
-              ),
+              // trailing: Row(
+              //   mainAxisSize: MainAxisSize.min,
+              //   children: <Widget>[
+              //     IconButton(
+              //       icon: Icon(Icons.refresh),
+              //       onPressed: () {
+              //         contactsBox.putAt(
+              //           index,
+              //           Contact('${contact.name}*', contact.age + 1),
+              //         );
+              //       },
+              //     ),
+              //     IconButton(
+              //       icon: Icon(Icons.delete),
+              //       onPressed: () {
+              //         contactsBox.deleteAt(index);
+              //       },
+              //     )
+              //   ],
+              // ),
             );
           },
         );
