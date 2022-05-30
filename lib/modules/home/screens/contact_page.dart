@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:training_hive/new_contact.dart';
 
-import 'models/contact.dart';
+import 'new_contact.dart';
+
 
 class ContactPage extends StatelessWidget {
   const ContactPage({Key? key}) : super(key: key);
@@ -15,14 +15,17 @@ class ContactPage extends StatelessWidget {
         ),
         body: Column(
           children: <Widget>[
-            Expanded(child: _ListView()),
+            Expanded(child: _listView()),
             NewContactForm(),
           ],
         ));
   }
 
-  Widget _ListView() {
+  Widget _listView() {
     var contactsBox = Hive.box('contacts');
+
+
+    
     return ValueListenableBuilder(
       valueListenable: Hive.box('contacts').listenable(),
       builder: (context, Box box, _) {
